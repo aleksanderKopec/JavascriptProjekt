@@ -1,16 +1,21 @@
+// node modules
 const express = require('express');
-const userController = require('./controllers/userController');
-const notesController = require('./controllers/notesController');
+const cors = require('cors');
 
+//routers
+const userRouter = require('./routes/userRoutes');
+const authRouter = require('./routes/authRoutes');
+const noteRouter = require('./routes/noteRoutes');
+
+//app config
 const app = express()
+app.use(cors())
+app.use(express.json())
 
-app.post('/user/login', userController.login)
-app.post('/user/register', userController.register)
-app.post('/user/:user_id', userController.get_user_info)
-app.get('/notes/:user_id', notesController.get_notes)
-app.get('/note/:note_id', notesController.get_note)
-app.put('/note/:note_id', notesController.create_note)
-app.post('/note/:note_id', notesController.edit_note)
+//routes
+app.use('/auth', authRouter)
+app.use('/note', noteRouter)
+app.use('/user', userRouter)
 
 
 port = 8020
