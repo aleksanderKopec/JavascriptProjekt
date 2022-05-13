@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const noteSchema = new mongoose.Schema({
     creatorId: String,
     viewableBy: [String],
-    dateCreated: Date,
+    timeCreated: Date,
     content: String,
+    title: String,
 })
 
 const Note = mongoose.model('Note', noteSchema)
