@@ -4,8 +4,8 @@ const authController = require('../controllers/authController');
 
 authRouter.use((req, res, next) => {
     console.log("---AUTH DEBUG ---")
-    console.log(req)
-    console.log(res)
+    console.log("Request body: ", req.body)
+    // console.log(res)
     console.log("---AUTH DEBUG ---")
     next()
 })

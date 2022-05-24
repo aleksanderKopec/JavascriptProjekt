@@ -1,6 +1,15 @@
 // node modules
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const authToken = require('./middleware/auth');
+
+//db connection
+mongoose.connect('mongodb://localhost:27017/test')
+
+//load .env file
+dotenv.config()
 
 //routers
 const userRouter = require('./routes/userRoutes');
@@ -14,8 +23,8 @@ app.use(express.json())
 
 //routes
 app.use('/auth', authRouter)
-app.use('/note', noteRouter)
-app.use('/user', userRouter)
+app.use('/note', authToken, noteRouter)
+app.use('/user', authToken ,userRouter)
 
 
 port = 8020

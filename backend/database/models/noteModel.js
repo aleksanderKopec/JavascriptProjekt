@@ -4,6 +4,7 @@ const noteSchema = new mongoose.Schema({
     creatorId: String,
     viewableBy: [String],
     timeCreated: Date,
+    timeUpdated: Date,
     content: String,
     title: String,
 })

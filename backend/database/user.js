@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 const userModel = require('./models/userModel');
 
 const addUser = (user) => {
-    const newUser = new userModel({
+    return userModel.create({
         login: user.login,
         password: user.password,
         displayName: user.displayName,
     })
-    return newUser.save()
 }
 
 const getUser = (login) => {
@@ -15,12 +14,14 @@ const getUser = (login) => {
 }
 
 const editUser = (user) => {
-    return userModel.findOne({login: user.login}).exec()
-    .then((foundUser) => {
-        foundUser.password = user.password
-        foundUser.displayName = user.displayName
-        return foundUser.save() 
-    })
+    return userModel.findOneAndUpdate(
+        {
+            login: user.login
+        },
+        {
+            displayName: user.displayName
+        } 
+    ).exec()
 }
 
 const deleteUser = (user) => {
