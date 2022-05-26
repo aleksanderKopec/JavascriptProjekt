@@ -17,7 +17,7 @@ const get_notes = (req, res) => {
 }
 
 const get_note = (req, res) => {
-    noteService.getNote(req.params.id)
+    noteService.getNote(req.params.noteId)
     .then((note) => {
         return res.status(200).send({
             message: "Fetched note",

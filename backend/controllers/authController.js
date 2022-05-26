@@ -54,7 +54,6 @@ const register = (req, res) => {
     }
     userService.addUser(newUser)
     .then((user) => {
-        console.log(user)
         return res.status(201).send({
             token: _generateAccessToken(user.login),
             message: "Succesfully registered an user"
