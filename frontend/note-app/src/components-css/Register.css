@@ -1,0 +1,10 @@
+.register-main{
+    display: flex;
+    width: 50%;
+    height: 50%;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
