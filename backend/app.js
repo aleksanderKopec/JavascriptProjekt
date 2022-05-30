@@ -27,9 +27,9 @@ app.use(cors())
 app.use(express.json())
 
 //routes
-app.use('/auth', authRouter)
-app.use('/note', authToken, noteRouter)
-app.use('/user', authToken ,userRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/note', authToken, noteRouter)
+app.use('/api/user', authToken ,userRouter)
 
 
 port = 8020

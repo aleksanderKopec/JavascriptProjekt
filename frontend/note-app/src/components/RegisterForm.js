@@ -1,18 +1,18 @@
 import React from 'react';
 import '../components-css/RegisterForm.css'
 import MyAlert from './MyAlert';
-// const axios = require('axios').default;
+const axios = require('axios').default;
 
 
 class RegisterForm extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            alert: null
+            errorAlert: null,
         }
     }
     render = () => {
-        let alert = this.state.alert
+        let errorAlert = this.state.errorAlert
         return (
             <div className='form-container register-form-container' id='form-container'>
                 <form className='form register-form'>
@@ -24,14 +24,46 @@ class RegisterForm extends React.Component{
                     <input className='form-password-input' id='form-password-input' required/>
                     <button className='submit-button' id='submit-button' onClick={this.handleSubmit}>Register</button>
                 </form>
-                {alert ? <MyAlert title={alert.title} value={alert.value} severity={alert.severity}></MyAlert> : ''}
+                {errorAlert ? 
+                <MyAlert 
+                    title={errorAlert.title} 
+                    value={errorAlert.value} 
+                    severity={errorAlert.severity}>
+                </MyAlert> 
+                : ''}
+                {/* {responseAlert ? 
+                <MyAlert 
+                    title={responseAlert.title} 
+                    value={responseAlert.value} 
+                    severity={responseAlert.severity}>
+                </MyAlert> 
+                : ''} */}
             </div>
         );
     }
 
     handleSubmit = (event) => {
         event.preventDefault()
-        this.validateInput()
+        const validatedInput = this.validateInput()
+        if (validatedInput == null) return
+
+        axios.post('/auth/register', {
+            login: validatedInput.email,
+            password: validatedInput.password,
+            displayName: validatedInput.displayName
+        })
+        .then((response) => {
+            // if (response.status !== 200)
+            // {
+            //     throw response.data
+            // }
+            localStorage.setItem('token', response.data.token)
+            window.location.href = '/app'
+        })
+        .catch((error) => {
+            console.log(error)
+            this.showErrorAlert(error.data.message)
+        })
     }
 
     validateInput = () => {
@@ -42,7 +74,8 @@ class RegisterForm extends React.Component{
         validationErrors += this.validatePassword(password)
         if (validationErrors)
         {
-            this.showValidationErrorAlert(validationErrors)
+            this.showErrorAlert(validationErrors)
+            return null
         }
         if (displayName.trim() === '')
         {
@@ -51,14 +84,15 @@ class RegisterForm extends React.Component{
         return {email, password, displayName}
     }
 
-    showValidationErrorAlert = (validationErrors) => {
+    showErrorAlert = (errors) => {
+        const alert = {
+            severity: 'error',
+            title: 'Errors in form',
+            value: errors
+        }
         this.setState({
-            alert: {
-                severity: 'error',
-                title: 'Validation errors in form',
-                value: validationErrors
-    }})
-        console.log(this.state)
+            errorAlert: alert,
+        })
     }
 
     validateEmail = (email) => {
@@ -66,11 +100,11 @@ class RegisterForm extends React.Component{
         email = email.trim()
         if (email === '')
         {
-            notValid += 'Email cannot be empty\n'
+            notValid += 'Email cannot be empty<br>'
         }
         if ((!email.includes('@')) || (!email.includes('.')))
         {
-            notValid += 'Email is not valid\n'
+            notValid += 'Email is not valid<br>'
         }
         return notValid
     }
@@ -80,11 +114,11 @@ class RegisterForm extends React.Component{
         password = password.trim()
         if (password === '')
         {
-            notValid += 'Password cannot be empty\n'
+            notValid += 'Password cannot be empty<br>'
         }
         if (password.length < 6)
         {
-            notValid += 'Password has to be at least 6 characters long\n'
+            notValid += 'Password has to be at least 6 characters long<br>'
         }
         return notValid
     }
