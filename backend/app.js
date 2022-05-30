@@ -5,11 +5,16 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authToken = require('./middleware/auth');
 
-//db connection
-mongoose.connect('mongodb://localhost:27017/test')
 
 //load .env file
 dotenv.config()
+
+
+//db connection
+const DB_HOST = process.env.DB_HOST
+const DB_PORT = process.env.DB_PORT
+const DB_NAME = process.env.DB_NAME
+mongoose.connect(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
 
 //routers
 const userRouter = require('./routes/userRoutes');
