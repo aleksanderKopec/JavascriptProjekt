@@ -1,25 +1,33 @@
-import logo from '../logo.svg';
+import React from 'react';
 import '../components-css/App.css';
+import MainNavBar from '../components/MainNavBar';
+import UserNotes from '../components/UserNotes';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  render = () => {
+    let token = localStorage.getItem('token')
+    return (
+      <div className="app-main">
+        {
+          token 
+          ?
+          <div className='app-content'>
+            <MainNavBar class="nav-bar"></MainNavBar>
+            <UserNotes></UserNotes>
+          </div>
+          :
+          ''
+        }
+      </div>
+    );
+  }
+
+  logout = () => {
+    localStorage.removeItem('token')
+    window.location.href = '/login'
+  }
+
+
 }
 
 export default App;
