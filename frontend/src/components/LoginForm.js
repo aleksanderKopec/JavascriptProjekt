@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 import '../components-css/LoginForm.css'
 import MyAlert from './MyAlert';
@@ -29,6 +30,7 @@ class LoginForm extends React.Component{
                     severity={errorAlert.severity}>
                 </MyAlert> 
                 : ''}
+                <Typography>Don't have an account? <a href='/register'>Register here</a></Typography>
             </div>
         );
     }

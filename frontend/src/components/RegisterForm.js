@@ -1,6 +1,7 @@
 import React from 'react';
 import '../components-css/RegisterForm.css'
 import MyAlert from './MyAlert';
+import { Typography } from '@mui/material';
 const axios = require('axios').default;
 
 
@@ -31,13 +32,7 @@ class RegisterForm extends React.Component{
                     severity={errorAlert.severity}>
                 </MyAlert> 
                 : ''}
-                {/* {responseAlert ? 
-                <MyAlert 
-                    title={responseAlert.title} 
-                    value={responseAlert.value} 
-                    severity={responseAlert.severity}>
-                </MyAlert> 
-                : ''} */}
+                <Typography>Already have an account? <a href='/login'>Login here</a></Typography>
             </div>
         );
     }
