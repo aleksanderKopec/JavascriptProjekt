@@ -14,5 +14,6 @@ notesRouter.get('/:userId/all', notesController.get_notes)
 notesRouter.get('/:noteId', notesController.get_note)
 notesRouter.put('/', notesController.create_note)
 notesRouter.post('/:noteId', notesController.edit_note)
+notesRouter.delete('/:noteId', notesController.delete_note)
 
 module.exports = notesRouter

@@ -29,13 +29,6 @@ class LoginForm extends React.Component{
                     severity={errorAlert.severity}>
                 </MyAlert> 
                 : ''}
-                {/* {responseAlert ? 
-                <MyAlert 
-                    title={responseAlert.title} 
-                    value={responseAlert.value} 
-                    severity={responseAlert.severity}>
-                </MyAlert> 
-                : ''} */}
             </div>
         );
     }

@@ -6,61 +6,68 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Fab } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import '../components-css/AddNoteButton.css'
 import CryptoJS from 'crypto-js';
 
-export default function AddNoteButton(props) {
+export default function EditNoteButton(props) {
     const [open, setOpen] = React.useState(false);
-    const [textTitle, setTextTitle] = React.useState('');
-    const [textContent, setTextContent] = React.useState('');
+    const [textTitle, setTextTitle] = React.useState(props.note.title);
+    const [textContent, setTextContent] = React.useState(props.note.content);
     const [notePassword, setNotePassword] = React.useState('')
 
     const handleClickOpen = () => {
         setOpen(true);
+        setTextContent(props.note.content)
+        console.log(props.note)
     };
 
     const handleClose = (event) => {
-        if (event.target.id === 'confirm-button')
+        if (event.target.id !== 'confirm-button')
         {
-            if (textTitle.trim() === '' || textContent.trim() === '')
-                return
+            setOpen(false)
+            return
         }
-        // setTextContent('')
-        setTextTitle('')
-        setNotePassword('')
-        setOpen(false);
-        const note = {
-            content: textContent,
-            title: textTitle,
-            isEncrypted: false,
+        if (textTitle.trim() === '' || textContent.trim() === '')
+        {
+            setOpen(false)
+            return
         }
+        const note = props.note
+        note.title = textTitle
+        note.content = textContent
         if (notePassword.trim() !== '')
         {
-            console.log("unecrypted:", textContent)
+            if (note.isEncrypted)
+            {
+                console.log("this note is already encrypted")
+                return
+            }
+            const encrypted = CryptoJS.AES.encrypt(textContent, notePassword).toString()
+            note.content = encrypted
             note.isEncrypted = true
             note.encryptionTest = CryptoJS.AES.encrypt("correct", notePassword).toString()
-            note.content = CryptoJS.AES.encrypt(textContent, notePassword).toString()
-            console.log("Encrypted content", note.content)
-            console.log("Encryption test:", note.encryptionTest)
         }
-        props.addNote(note)
+        setTextTitle(note.title)
+        setTextContent(note.content)
+        setNotePassword('')
+        props.editNote(note)
+        setOpen(false);
     };
 
 
 
     return (
         <div>
-            <Fab onClick={handleClickOpen} className='add-note-button' sx={{position: 'absolute'}}>
-                <AddIcon></AddIcon>
-            </Fab>
+            <IconButton onClick={handleClickOpen} className='edit-note-button'>
+                <EditIcon></EditIcon>
+            </IconButton>
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Add note</DialogTitle>
+                <DialogTitle>Edit note</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        To add note please specify its title and contents. If you wish
-                        to encrypt it, specify password.
+                        To edit note please specify its title and contents
                     </DialogContentText>
                     <TextField
                         value={textTitle}
@@ -102,7 +109,7 @@ export default function AddNoteButton(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose} id='confirm-button'>Add</Button>
+                    <Button onClick={handleClose} id='confirm-button'>Save</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -1,0 +1,7 @@
+.note-cards-container{
+    display: flex;
+    flex-flow: row wrap;
+    /* justify-content:stretch; */
+    padding: 1rem;
+    gap: 2rem;
+}

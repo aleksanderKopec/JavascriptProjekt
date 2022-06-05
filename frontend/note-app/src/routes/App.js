@@ -4,6 +4,11 @@ import MainNavBar from '../components/MainNavBar';
 import UserNotes from '../components/UserNotes';
 
 class App extends React.Component{
+  logout = () => {
+    localStorage.removeItem('token')
+    window.location.href = '/login'
+  }
+
   render = () => {
     let token = localStorage.getItem('token')
     return (
@@ -12,7 +17,7 @@ class App extends React.Component{
           token 
           ?
           <div className='app-content'>
-            <MainNavBar class="nav-bar"></MainNavBar>
+            <MainNavBar class="nav-bar" logout={this.logout}></MainNavBar>
             <UserNotes></UserNotes>
           </div>
           :
@@ -21,12 +26,6 @@ class App extends React.Component{
       </div>
     );
   }
-
-  logout = () => {
-    localStorage.removeItem('token')
-    window.location.href = '/login'
-  }
-
 
 }
 

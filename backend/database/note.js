@@ -9,6 +9,8 @@ const addNote = (note, login) => {
         timeUpdated: Date.now(),
         content: note.content,
         title: note.title,
+        isEncrypted: note.isEncrypted,
+        encryptionTest: note.encryptionTest
     })
 }
 
@@ -28,13 +30,14 @@ const editNote = (note) => {
         {
             content: note.content,
             title: note.title,
-            viewableBy: note.viewableBy
+            viewableBy: note.viewableBy,
+            isEncrypted: note.isEncrypted,
         } 
     ).exec()
 }
 
-const deleteNote = (note) => {
-    return noteModel.findOneAndDelete({_id: note._id}).exec()
+const deleteNote = (_id) => {
+    return noteModel.findOneAndDelete({_id: _id}).exec()
 }
 
 module.exports = { addNote, getNote, getUserNotes, editNote, deleteNote}

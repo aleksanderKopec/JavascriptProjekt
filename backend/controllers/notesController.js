@@ -64,4 +64,21 @@ const edit_note =  (req, res) => {
     })
 }
 
-module.exports = {get_notes, get_note, create_note, edit_note}
+const delete_note = (req, res) => {
+    console.log("Deleting id:", req.params.noteId)
+    noteService.deleteNote(req.params.noteId)
+    .then((note) => {
+        return res.status(204).send({
+            message: "Succesfully deleted a note",
+            _id: note._id
+        })
+    })
+    .catch((error) => {
+        console.error(error)
+        return res.status(500).send({
+            message: error.message
+        })
+    })
+}
+
+module.exports = {get_notes, get_note, create_note, edit_note, delete_note}
