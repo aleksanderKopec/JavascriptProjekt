@@ -53,7 +53,11 @@ function UserNotes(props) {
                 getUserNotes()
             })
             .catch((error) => {
-                console.log(error.data)
+                if (error.response.status === 403)
+                {
+                    alert("Session expired, please log in again")
+                    window.location.href = '/login'
+                }
             })
     }
 
@@ -75,7 +79,11 @@ function UserNotes(props) {
             getUserNotes()
         })
         .catch((error) => {
-            console.error(error)
+            if (error.response.status === 403)
+            {
+                alert("Session expired, please log in again")
+                window.location.href = '/login'
+            }
         })
     }
 
@@ -92,7 +100,11 @@ function UserNotes(props) {
             getUserNotes()
         })
         .catch((error) => {
-            console.log(error.response)
+            if (error.response.status === 403)
+            {
+                alert("Session expired, please log in again")
+                window.location.href = '/login'
+            }
         })
     }
 
