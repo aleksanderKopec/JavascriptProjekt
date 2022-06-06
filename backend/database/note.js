@@ -19,7 +19,8 @@ const getNote = (noteId) => {
 }
 
 const getUserNotes = (userLogin) => {
-    return noteModel.find({login: userLogin}).exec()
+    console.log("userLogin: ", userLogin)
+    return noteModel.find({creatorId: userLogin}).exec()
 }
 
 const editNote = (note) => {

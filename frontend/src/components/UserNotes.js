@@ -25,6 +25,11 @@ function UserNotes(props) {
         })
         .catch((error) => {
             console.error(error.response)
+            if (error.response.status === 403)
+            {
+                alert("Session expired, please log in again")
+                window.location.href = '/login'
+            }
         })
         console.log("usernotes:", userNotes)
     }

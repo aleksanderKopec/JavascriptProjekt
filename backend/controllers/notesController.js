@@ -3,6 +3,7 @@ const noteService = require('../database/note');
 const get_notes = (req, res) => {
     noteService.getUserNotes(req.params.userId)
     .then((userNotes) => {
+        console.log("userNotes: ", userNotes)
         return res.status(200).send({
             message: "Fetched user notes",
             notes: userNotes

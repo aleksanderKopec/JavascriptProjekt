@@ -19,7 +19,7 @@ import {
 const axios = require('axios').default;
 const API_HOST = process.env.REACT_APP_BACKEND_HOST
 const API_PORT = process.env.REACT_APP_BACKEND_PORT
-axios.defaults.baseURL = `http://${API_HOST}:${API_PORT}/api`
+axios.defaults.baseURL = `http://${window.location.hostname}:${API_PORT}/api`
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

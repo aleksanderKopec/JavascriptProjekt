@@ -81,7 +81,7 @@ const _generateHashedPassword = (plainPassword) => {
 }
 
 const _generateAccessToken = (login) => {
-    return jwt.sign({login: login}, process.env.TOKEN_SECRET, {expiresIn: '1800s'})
+    return jwt.sign({login: login}, process.env.TOKEN_SECRET, {expiresIn: '20s'})
 }
 
 module.exports = {login, register}
